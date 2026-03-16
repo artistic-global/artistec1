@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ArtistTech — Custom Software & Web Apps",
-  description: "ArtistTech builds custom software, web apps, and mobile applications tailored to your vision.",
+  title: "Artistech | Custom Software & Web Apps",
+  description: "Artistech builds custom software, web apps, and mobile applications tailored to your vision.",
 };
 
 export default function RootLayout({
@@ -24,6 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.cdnfonts.com" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

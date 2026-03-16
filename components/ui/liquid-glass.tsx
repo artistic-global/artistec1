@@ -29,8 +29,9 @@ export const LiquidGlassCard = ({
   expandedHeight,
   blurIntensity = 'xl',
   borderRadius = '32px',
-  glowIntensity = 'sm',
   shadowIntensity = 'md',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  glowIntensity: _glowIntensity,
   ...props
 }: LiquidGlassCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -42,28 +43,33 @@ export const LiquidGlassCard = ({
   };
 
   const blurClasses = {
-    sm: 'backdrop-blur-xs',
+    sm: 'backdrop-blur-sm',
     md: 'backdrop-blur-md',
-    lg: 'backdrop-blur-lg',
-    xl: 'backdrop-blur-xl',
+    lg: 'backdrop-blur-xl',
+    xl: 'backdrop-blur-2xl',
+  };
+
+  const surfaceClasses = {
+    sm: 'bg-white/10',
+    md: 'bg-white/12',
+    lg: 'bg-white/14',
+    xl: 'bg-white/16',
+  };
+
+  const blurPixels = {
+    sm: '4px',
+    md: '12px',
+    lg: '20px',
+    xl: '28px',
   };
 
   const shadowStyles = {
-    none: 'inset 0 0 0 0 rgba(255, 255, 255, 0)',
-    xs: 'inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 1px 0 rgba(255, 255, 255, 0.3)',
-    sm: 'inset 2px 2px 2px 0 rgba(255, 255, 255, 0.35), inset -2px -2px 2px 0 rgba(255, 255, 255, 0.35)',
-    md: 'inset 3px 3px 3px 0 rgba(255, 255, 255, 0.45), inset -3px -3px 3px 0 rgba(255, 255, 255, 0.45)',
-    lg: 'inset 4px 4px 4px 0 rgba(255, 255, 255, 0.5), inset -4px -4px 4px 0 rgba(255, 255, 255, 0.5)',
-    xl: 'inset 6px 6px 6px 0 rgba(255, 255, 255, 0.55), inset -6px -6px 6px 0 rgba(255, 255, 255, 0.55)',
-  };
-
-  const glowStyles = {
-    none: '0 0 0 rgba(255, 255, 255, 0)',
-    xs: '0 10px 24px rgba(255, 255, 255, 0.08)',
-    sm: '0 12px 28px rgba(255, 255, 255, 0.12)',
-    md: '0 14px 32px rgba(255, 255, 255, 0.16)',
-    lg: '0 18px 38px rgba(255, 255, 255, 0.18)',
-    xl: '0 22px 44px rgba(255, 255, 255, 0.22)',
+    none: 'none',
+    xs: '0 16px 40px rgba(172, 189, 255, 0.16), inset 0 1px 0 rgba(245, 247, 255, 0.7)',
+    sm: '0 16px 40px rgba(172, 189, 255, 0.16), inset 0 1px 0 rgba(245, 247, 255, 0.7)',
+    md: '0 16px 40px rgba(172, 189, 255, 0.16), inset 0 1px 0 rgba(245, 247, 255, 0.7)',
+    lg: '0 16px 40px rgba(172, 189, 255, 0.16), inset 0 1px 0 rgba(245, 247, 255, 0.7)',
+    xl: '0 16px 40px rgba(172, 189, 255, 0.16), inset 0 1px 0 rgba(245, 247, 255, 0.7)',
   };
 
   const easeCurve: [number, number, number, number] = [0.5, 1.5, 0.5, 1];
@@ -105,38 +111,23 @@ export const LiquidGlassCard = ({
   return (
     <MotionComponent
       className={cn(
-        `relative ${draggable ? 'cursor-grab active:cursor-grabbing' : ''} ${expandable ? 'cursor-pointer' : ''}`,
+        `relative ${blurClasses[blurIntensity]} ${surfaceClasses[blurIntensity]} backdrop-saturate-100`,
+        `border border-[#dfe7ff]/75`,
+        `${draggable ? 'cursor-grab active:cursor-grabbing' : ''} ${expandable ? 'cursor-pointer' : ''}`,
         className
       )}
       style={{
         borderRadius,
+        backdropFilter: `blur(${blurPixels[blurIntensity]}) saturate(100%)`,
+        WebkitBackdropFilter: `blur(${blurPixels[blurIntensity]}) saturate(100%)`,
+        boxShadow: shadowStyles[shadowIntensity],
         ...(width && !expandable && { width }),
         ...(height && !expandable && { height }),
       }}
       {...motionProps}
       {...props}
     >
-      <div
-        className={`absolute inset-0 ${blurClasses[blurIntensity]} backdrop-saturate-150 bg-white/38 z-0`}
-        style={{ borderRadius }}
-      />
-      <div
-        className='absolute inset-0 z-10 bg-gradient-to-br from-white/55 via-white/26 to-white/18'
-        style={{ borderRadius }}
-      />
-      <div
-        className='absolute inset-0 z-20'
-        style={{ borderRadius, boxShadow: glowStyles[glowIntensity] }}
-      />
-      <div
-        className='absolute inset-0 z-30'
-        style={{
-          borderRadius,
-          boxShadow: shadowStyles[shadowIntensity],
-          border: '1px solid rgba(255,255,255,0.55)',
-        }}
-      />
-      {children}
+      <div className='relative z-10'>{children}</div>
     </MotionComponent>
   );
 };

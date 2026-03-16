@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Colors, Liquid } from '@/components/ui/liquid-gradient';
 
 const COLORS: Colors = {
@@ -36,57 +36,80 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
   showArrow = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [useCompactAnimation, setUseCompactAnimation] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px), (pointer: coarse)');
+    const updateCompactAnimation = () => setUseCompactAnimation(mediaQuery.matches);
+
+    updateCompactAnimation();
+    mediaQuery.addEventListener('change', updateCompactAnimation);
+
+    return () => mediaQuery.removeEventListener('change', updateCompactAnimation);
+  }, []);
+
+  const activate = () => setIsHovered(true);
+  const deactivate = () => setIsHovered(false);
 
   const dimensions =
     size === 'sm'
       ? 'h-[2.2em] w-[7.5rem]'
       : 'h-[2.8em] w-44';
 
+  const haloSpacing =
+    size === 'sm'
+      ? 'px-2.5 py-2 -mx-2.5 -my-2'
+      : 'px-3 py-2.5 -mx-3 -my-2.5';
+
   return (
     <a
       href={href}
-      className={`relative inline-flex items-center ${dimensions} group
-                 bg-white border-2 border-black/10 rounded-xl overflow-visible`}
+      className={`relative inline-flex items-center justify-center ${haloSpacing} group overflow-visible touch-manipulation`}
+      aria-label={label}
+      onMouseEnter={activate}
+      onMouseLeave={deactivate}
+      onPointerDown={activate}
+      onPointerUp={deactivate}
+      onPointerCancel={deactivate}
+      onFocus={activate}
+      onBlur={deactivate}
     >
-      <div className='absolute w-[115%] h-[140%] top-[10%] left-1/2 -translate-x-1/2
-                      filter blur-[22px] opacity-75 pointer-events-none'>
-        <span className='absolute inset-0 rounded-xl bg-[#c8d0ff] filter blur-sm' />
-        <div className='relative w-full h-full overflow-hidden rounded-xl'>
-          <Liquid isHovered={isHovered} colors={COLORS} />
-        </div>
-      </div>
-
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[38%]
-                      w-[90%] h-[115%] rounded-xl
-                      bg-[#c7d2fe] filter blur-sm pointer-events-none' />
-
-      <div className='relative w-full h-full overflow-hidden rounded-xl'>
-        <span className='absolute inset-0 rounded-xl bg-[#e0e7ff]' />
-        <span className='absolute inset-0 rounded-xl bg-[#eef2ff]/80' />
-        <Liquid isHovered={isHovered} colors={COLORS} />
-        {[1, 2, 3, 4, 5].map((i) => (
-          <span
-            key={i}
-            className={`absolute inset-0 rounded-xl border-[3px] border-white/30 mix-blend-overlay
-                        ${i <= 2 ? 'blur-[3px]' : i === 3 ? 'blur-[5px]' : 'blur-[1px]'}`}
-          />
-        ))}
-        <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[38%]
-                         w-[65%] h-[45%] rounded-xl filter blur-[14px] bg-white/40
-                         pointer-events-none' />
-      </div>
-
-      <button
-        className='absolute inset-0 rounded-xl bg-transparent cursor-pointer'
-        type='button'
-        aria-label={label}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      <div
+        className={`relative ${dimensions} overflow-visible rounded-xl bg-[#f7f8ff] border-2 border-[#c9d4ff]/80`}
       >
-        <span className='flex items-center justify-center gap-1.5
-                         text-indigo-800 font-semibold tracking-wide whitespace-nowrap
-                         group-hover:text-indigo-600 transition-colors duration-200
-                         text-sm'>
+        <div className='absolute left-1/2 top-1/2 h-[122%] w-[108%] -translate-x-1/2 -translate-y-[46%]
+                        opacity-75 blur-[18px] pointer-events-none
+                        sm:h-[140%] sm:w-[115%] sm:-translate-y-[40%] sm:blur-[22px]'>
+          <span className='absolute inset-0 rounded-xl bg-[#d8ddff] blur-sm' />
+          <div className='relative h-full w-full overflow-hidden rounded-xl bg-linear-to-br from-[#c7d2fe] via-[#a5b4fc] to-[#818cf8]' />
+        </div>
+
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[38%]
+                        w-[88%] h-[108%] rounded-xl bg-[#c7d2fe] blur-sm pointer-events-none
+                        sm:w-[90%] sm:h-[115%]' />
+
+        <div className='relative h-full w-full overflow-hidden rounded-xl'>
+          <span className='absolute inset-0 rounded-xl bg-[#e7ecff]' />
+          <span className='absolute inset-0 rounded-xl bg-[#f5f7ff]/80' />
+          <Liquid isHovered={isHovered} colors={COLORS} compact={useCompactAnimation} />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <span
+              key={i}
+              className={`absolute inset-0 rounded-xl border-[3px] border-white/30 mix-blend-overlay
+                          ${i <= 2 ? 'blur-[3px]' : i === 3 ? 'blur-[5px]' : 'blur-[1px]'}`}
+            />
+          ))}
+          <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[38%]
+                           h-[42%] w-[60%] rounded-xl bg-white/40 blur-md pointer-events-none
+                           sm:h-[45%] sm:w-[65%] sm:blur-[14px]' />
+        </div>
+
+        <span
+          className='absolute inset-0 z-10 flex items-center justify-center gap-1.5 rounded-xl
+                     text-[#4f46b8] font-semibold tracking-wide whitespace-nowrap
+                     group-hover:text-[#3d36a1] transition-colors duration-200
+                     text-sm pointer-events-none'
+        >
           {label}
           {showArrow && (
             <svg
@@ -99,7 +122,7 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
             </svg>
           )}
         </span>
-      </button>
+      </div>
     </a>
   );
 };
