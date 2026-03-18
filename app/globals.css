@@ -43,6 +43,332 @@ body {
   padding: 0;
 }
 
+.hero-shell {
+  isolation: isolate;
+}
+
+.hero-stage {
+  isolation: isolate;
+}
+
+/* Desktop hero stage: full viewport occupying space below navbar */
+.hero-stage-desktop {
+  height: 100%;
+  overflow: visible !important;
+}
+
+.hero-cut {
+  position: absolute;
+  z-index: 9;
+  border-radius: 9999px;
+  background: #fcfbff;
+  /* double shadow to hide behind the circle edges */
+  box-shadow: 0 0 0 8px #fcfbff, 0 12px 28px rgba(230,224,248,0.60);
+  pointer-events: none;
+}
+
+/* Cutout at the top-left corner of the center card */
+.hero-cut-top-left {
+  top: 72px;    /* aligns to where the center card starts */
+  left: 88px;   /* left-sidebar width */
+  transform: translate(-50%, -50%);
+  height: 96px;
+  width: 96px;
+}
+
+/* Cutout at the top-right corner (between center card and right col) */
+.hero-cut-top-right {
+  top: 72px;
+  right: 312px; /* 240px right-col + 72px strip */
+  transform: translate(50%, -50%);
+  height: 96px;
+  width: 96px;
+}
+
+/* Cutout at the bottom-left corner of the center card */
+.hero-cut-bottom-left {
+  bottom: 0;
+  left: 88px;
+  transform: translate(-50%, 50%);
+  height: 96px;
+  width: 96px;
+}
+
+/* Cutout at the bottom-right corner of center card */
+.hero-cut-bottom-right {
+  bottom: 0;
+  right: 312px;
+  transform: translate(50%, 50%);
+  height: 96px;
+  width: 96px;
+}
+
+/* Extra mid-right cutout (creates visual break on right edge) */
+.hero-cut-side-right {
+  top: 50%;
+  right: 312px;
+  transform: translate(50%, -50%);
+  height: 64px;
+  width: 64px;
+}
+
+.hero-text-card {
+  z-index: 10;
+}
+
+/* The white text card sits at bottom-left of the center column, overlapping the card */
+.hero-text-card-desktop {
+  bottom: 0;
+  left: 0;
+}
+
+.hero-orb,
+.hero-ring {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.hero-orb {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.18) 36%, rgba(255, 255, 255, 0.06) 58%, rgba(255, 255, 255, 0.18) 74%, rgba(90, 48, 150, 0.36) 100%),
+    linear-gradient(145deg, rgba(247, 231, 255, 0.88), rgba(186, 140, 255, 0.22));
+  box-shadow:
+    inset -18px -22px 38px rgba(255, 255, 255, 0.36),
+    inset 14px 18px 30px rgba(88, 46, 145, 0.18),
+    0 22px 40px rgba(118, 71, 185, 0.2);
+  backdrop-filter: blur(7px);
+  animation: hero-float 14s ease-in-out infinite;
+}
+
+.hero-ring {
+  border-radius: 9999px;
+  border: 22px solid rgba(16, 10, 27, 0.88);
+  box-shadow: 0 16px 36px rgba(20, 12, 34, 0.16);
+  animation: hero-drift 16s ease-in-out infinite;
+}
+
+.hero-orb-one {
+  top: 14%;
+  left: 17%;
+  height: 156px;
+  width: 156px;
+}
+
+.hero-orb-two {
+  top: 41%;
+  left: 39%;
+  height: 232px;
+  width: 232px;
+  animation-delay: -4s;
+}
+
+.hero-orb-three {
+  right: 8%;
+  top: 24%;
+  height: 126px;
+  width: 126px;
+  animation-delay: -8s;
+}
+
+.hero-ring-one {
+  top: -3%;
+  left: 8%;
+  height: 118px;
+  width: 118px;
+}
+
+.hero-ring-two {
+  top: 10%;
+  right: 8%;
+  height: 108px;
+  width: 108px;
+  animation-delay: -6s;
+}
+
+.hero-ring-three {
+  right: -2%;
+  bottom: 20%;
+  height: 88px;
+  width: 88px;
+  animation-delay: -3s;
+}
+
+.hero-ring-four {
+  right: 18%;
+  top: -11%;
+  height: 168px;
+  width: 168px;
+  border-width: 26px;
+  animation-delay: -10s;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(4deg);
+  }
+}
+
+@keyframes hero-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(10px, -10px, 0) rotate(12deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-cut-top-left {
+    top: 18px;
+    left: -28px;
+    height: 82px;
+    width: 82px;
+  }
+
+  .hero-cut-top-right {
+    top: 2px;
+    right: -34px;
+    height: 112px;
+    width: 112px;
+  }
+
+  .hero-cut-bottom-left {
+    bottom: -62px;
+    left: 10%;
+    height: 154px;
+    width: 154px;
+  }
+
+  .hero-cut-bottom-right {
+    right: -24px;
+    bottom: 46px;
+    height: 82px;
+    width: 82px;
+  }
+
+  .hero-cut-side-right {
+    top: 61%;
+    right: -18px;
+    height: 56px;
+    width: 56px;
+  }
+
+  .hero-ring {
+    border-width: 18px;
+  }
+
+  .hero-orb-one {
+    top: 18%;
+    left: 8%;
+    height: 120px;
+    width: 120px;
+  }
+
+  .hero-orb-two {
+    left: 32%;
+    top: 44%;
+    height: 190px;
+    width: 190px;
+  }
+
+  .hero-orb-three {
+    right: 10%;
+    top: 26%;
+    height: 96px;
+    width: 96px;
+  }
+
+  .hero-ring-four {
+    height: 132px;
+    width: 132px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-stage-mobile {
+    padding: 10px;
+  }
+
+  .hero-cut-mobile-left {
+    top: 12px;
+    left: -26px;
+    height: 76px;
+    width: 76px;
+  }
+
+  .hero-cut-mobile-top {
+    top: -22px;
+    right: 14%;
+    height: 64px;
+    width: 64px;
+  }
+
+  .hero-cut-mobile-bottom {
+    right: -22px;
+    bottom: 18%;
+    height: 74px;
+    width: 74px;
+  }
+
+  .hero-orb-one {
+    top: 20%;
+    left: 10%;
+    height: 84px;
+    width: 84px;
+  }
+
+  .hero-orb-two {
+    left: 42%;
+    top: 50%;
+    height: 132px;
+    width: 132px;
+  }
+
+  .hero-orb-three {
+    right: 8%;
+    top: 28%;
+    height: 72px;
+    width: 72px;
+  }
+
+  .hero-ring-one {
+    top: -1%;
+    left: 2%;
+    height: 74px;
+    width: 74px;
+  }
+
+  .hero-ring-two {
+    right: 6%;
+    top: 10%;
+    height: 70px;
+    width: 70px;
+  }
+
+  .hero-ring-three {
+    bottom: 24%;
+    right: -2%;
+    height: 54px;
+    width: 54px;
+  }
+
+  .hero-ring-four {
+    right: 20%;
+    top: -5%;
+    height: 82px;
+    width: 82px;
+    border-width: 14px;
+  }
+}
+
 .noise-overlay::before {
   content: "";
   position: absolute;
@@ -61,4 +387,62 @@ body {
 .liquid-layer {
   will-change: transform;
   transform: translateZ(0);
+}
+
+/* ── Entrance animations ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-up {
+  animation: fade-up 0.7s ease both;
+}
+
+/* ── Glitch text effect ── */
+@keyframes glitch-slice-1 {
+  0%, 85%, 100% { opacity: 0; clip-path: none; transform: translate(0); }
+  87% { opacity: 1; clip-path: polygon(0 12%, 100% 12%, 100% 28%, 0 28%); transform: translate(-4px, 0); }
+  89% { opacity: 1; clip-path: polygon(0 55%, 100% 55%, 100% 72%, 0 72%); transform: translate(3px, 0); }
+  91% { opacity: 1; clip-path: polygon(0 38%, 100% 38%, 100% 48%, 0 48%); transform: translate(-2px, 0); }
+}
+
+@keyframes glitch-slice-2 {
+  0%, 85%, 100% { opacity: 0; clip-path: none; transform: translate(0); }
+  87% { opacity: 0.75; clip-path: polygon(0 65%, 100% 65%, 100% 80%, 0 80%); transform: translate(4px, 0); }
+  89% { opacity: 0.75; clip-path: polygon(0 8%, 100% 8%, 100% 20%, 0 20%); transform: translate(-3px, 0); }
+  91% { opacity: 0; }
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: #7b8fd6;
+  animation: glitch-slice-1 6s ease 2s infinite both;
+}
+
+.glitch::after {
+  color: #c8d0f8;
+  animation: glitch-slice-2 6s ease 2.1s infinite both;
+}
+
+/* ── Services scroll-triggered entry ── */
+.card-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.card-animate {
+  animation: fade-up 0.65s ease both;
 }

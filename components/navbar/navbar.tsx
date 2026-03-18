@@ -2,21 +2,16 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { LiquidButton } from '@/components/ui/start-project-button'
 import Image from 'next/image'
 
-const navLinks = ['Services', 'Portfolio', 'Technology', 'About', 'Contact']
+const navLinks = ['About Us', 'Services', 'Case Studies']
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     requestAnimationFrame(() => setMounted(true))
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
@@ -38,140 +33,104 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50
+        className={`fixed top-0 left-0 right-0 z-50 hidden lg:flex items-stretch h-[72px]
                     transition-all duration-700 ease-out
                     ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
-        <div
-          className={`noise-overlay relative w-full flex items-stretch h-[76px] lg:h-[92px]
-                      border-b transition-all duration-500
-                      ${scrolled
-                        ? 'border-white/30 backdrop-blur-2xl bg-white/10 shadow-[0_8px_32px_rgba(172,189,255,0.15)]'
-                        : 'border-[#a3b1ff]/25 backdrop-blur-md bg-transparent'
-                      }`}
-        >
-          <div className="relative z-10 flex items-center justify-center w-[85px] md:w-[160px] lg:w-[200px] xl:w-[240px] 
-                          border-r border-[#a3b1ff]/25 shrink-0 transition-colors duration-500 px-4 md:px-6">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl">
-                <Image 
-                  src="/logo.png" 
-                  width={44} 
-                  height={44} 
-                  alt="Artistech logo" 
-                  className="w-full h-full object-cover" 
-                />
-              </div>
-              <span className="hidden md:block text-[#4a5290] font-semibold text-[11px] uppercase tracking-[0.2em] whitespace-nowrap">
-                Artistech
-              </span>
-            </Link>
-          </div>
-
-          <div className="relative z-10 flex-1 flex items-center justify-start px-6 md:px-10 lg:px-16 overflow-visible">
-            <div className="hidden md:flex items-center gap-7 lg:gap-14">
-              {navLinks.map((item) => (
-                <Link
-                  key={item}
-                  href="#"
-                  className="relative text-[#6a72a0] hover:text-[#3d457f] text-[11px] lg:text-[12px] font-semibold
-                             uppercase tracking-[0.2em] transition-colors duration-250 group py-2"
-                >
-                  {item}
-                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px]
-                                   bg-[#8890c4]/60 transition-all duration-300 ease-out
-                                   group-hover:w-full" />
-                </Link>
-              ))}
+        <div className="flex items-center gap-3 pl-5 pr-6 border-b border-r border-[#e0d9f0] bg-white shrink-0">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full overflow-hidden border border-[#e0d4f5] shadow-[0_4px_12px_rgba(156,126,204,0.18)]">
+              <Image src="/logo.png" width={36} height={36} alt="Artistec logo" className="w-full h-full object-cover" />
             </div>
-            
-            <span className="md:hidden text-[#4a5290] font-semibold text-sm uppercase tracking-[0.18em]">
-              Artistech
-            </span>
-          </div>
+            <span className="text-[#17131f] font-bold text-[15px] tracking-[-0.01em]">Artistec</span>
+          </Link>
+        
+        </div>
 
-          <div className="relative z-10 flex items-center justify-end px-5 md:px-8 lg:px-12 shrink-0 
-                          border-l border-transparent md:border-[#a3b1ff]/25 transition-colors duration-500">
-            <div className="hidden md:block py-4 pr-1 overflow-visible">
-              <LiquidButton label='Get Started' href='#' size='sm' />
-            </div>
-
-            <button
-              className="md:hidden text-[#5f689f] hover:text-[#444d88] transition-colors p-2"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <div className="w-5 h-3.5 relative flex flex-col justify-between">
-                <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center
-                                  ${menuOpen ? 'rotate-45 translate-y-[6.25px]' : ''}`} />
-                <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-200
-                                  ${menuOpen ? 'opacity-0 scale-x-0' : 'opacity-100'}`} />
-                <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center
-                                  ${menuOpen ? '-rotate-45 -translate-y-[6.25px]' : ''}`} />
-              </div>
-            </button>
+        <div className="flex-1 flex items-center justify-center border-b border-[#e0d9f0] bg-white">
+          <div className="inline-flex items-center gap-1 rounded-full border border-[#e4daf5] bg-white/95 p-1 shadow-[0_8px_24px_rgba(145,104,206,0.10)]">
+            {navLinks.map((item, index) => (
+              <Link
+                key={item}
+                href="#"
+                className={`rounded-full px-5 py-2 text-[12px] font-medium transition-all duration-200 ${
+                  index === 1
+                    ? 'bg-[#17131f] text-white shadow-[0_6px_16px_rgba(23,19,31,0.18)]'
+                    : 'text-[#4d445d] hover:bg-[#f3eeff]'
+                }`}
+              >
+                {item}
+              </Link>
+            ))}
           </div>
+        </div>
+
+        <div className="flex items-center gap-2 px-5 border-b border-l border-[#e0d9f0] bg-white shrink-0">
+        
+          <Link
+            href="#"
+            className="flex items-center gap-2 rounded-full border border-[#e0d9f0] bg-white pl-4 pr-2 py-2 text-[12px] font-medium text-[#17131f] shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:bg-[#f8f4ff] transition-colors"
+          >
+            Connect
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#17131f] text-white text-[10px]">→</span>
+          </Link>
         </div>
       </nav>
 
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between lg:hidden h-[60px] px-4
+                    border-b border-[#e0d9f0] bg-white
+                    transition-all duration-700 ease-out
+                    ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
+      >
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-[#e0d4f5]">
+            <Image src="/logo.png" width={32} height={32} alt="Artistec logo" className="w-full h-full object-cover" />
+          </div>
+          <span className="text-[#17131f] font-bold text-[14px] tracking-[-0.01em]">Artistec</span>
+        </Link>
+
+        <button
+          className="flex items-center justify-center w-8 h-8 rounded-full border border-[#e0d9f0] bg-white"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <div className="w-4 h-3 relative flex flex-col justify-between">
+            <span className={`block h-[1.5px] bg-[#17131f] rounded-full transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[5px]' : ''}`} />
+            <span className={`block h-[1.5px] bg-[#17131f] rounded-full transition-all duration-200 ${menuOpen ? 'opacity-0 scale-x-0' : 'opacity-100'}`} />
+            <span className={`block h-[1.5px] bg-[#17131f] rounded-full transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`} />
+          </div>
+        </button>
+      </nav>
+
       <div
-        className={`fixed inset-0 z-40 overflow-x-visible overflow-y-auto md:hidden transition-all duration-500 ease-in-out
+        className={`fixed inset-0 z-40 overflow-y-auto lg:hidden transition-all duration-500 ease-in-out
                     ${menuOpen ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none'}`}
       >
-        <div className={`noise-overlay absolute inset-0 
-                         backdrop-blur-2xl bg-linear-to-b from-white/20 via-[#eef0ff]/25 to-[#ccd4ff]/20
-                         transition-all duration-500
-                         ${menuOpen ? 'backdrop-saturate-150' : 'backdrop-saturate-100'}`}>
-          <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2
-                          w-[85vw] h-[85vw] rounded-full
-                          bg-[radial-gradient(circle,rgba(165,180,252,0.2)_0%,transparent_70%)]
-                          pointer-events-none" />
-        </div>
-
-        <div className="relative z-10 flex min-h-dvh flex-col px-8 pt-[100px] pb-24 overflow-visible">
+        <div className="absolute inset-0 backdrop-blur-2xl bg-white/90" />
+        <div className="relative z-10 flex min-h-dvh flex-col px-8 pt-[80px] pb-24">
           <div className="flex-1 flex flex-col justify-center gap-1">
             {navLinks.map((item, i) => (
               <Link
                 key={item}
                 href="#"
                 onClick={closeMenu}
-                className={`group flex items-center justify-between py-4
-                            border-b border-[#a3b1ff]/20 last:border-b-0
+                className={`group flex items-center justify-between py-5 border-b border-[#e8e2f4] last:border-b-0
                             transition-all duration-500 ease-out
-                            ${menuOpen
-                              ? 'translate-y-0 opacity-100'
-                              : 'translate-y-6 opacity-0'}`}
-                style={{ transitionDelay: menuOpen ? `${150 + i * 50}ms` : '0ms' }}
+                            ${menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}
+                style={{ transitionDelay: menuOpen ? `${100 + i * 60}ms` : '0ms' }}
               >
-                <span className="text-[#3c437a] text-[1.65rem] font-medium uppercase tracking-[0.14em]
-                                 group-hover:text-[#2a3060] transition-colors duration-200">
-                  {item}
-                </span>
-                <svg
-                  width="22" height="22" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.5"
-                  className="text-[#8890c4] opacity-0 -translate-x-3
-                             group-hover:opacity-100 group-hover:translate-x-0
-                             transition-all duration-300"
-                >
+                <span className="text-[#17131f] text-[1.8rem] font-bold tracking-[-0.03em]">{item}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#8890c4]">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
             ))}
           </div>
-
-          <div
-            className={`mt-auto pt-8 pb-4 flex flex-col items-center justify-center overflow-visible
-                        transition-all duration-500 ease-out
-                        ${menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-            style={{ transitionDelay: menuOpen ? `${150 + navLinks.length * 50 + 100}ms` : '0ms' }}
-          >
-            <div className="relative overflow-visible scale-110 mb-6">
-              <LiquidButton label='Get Started' href='#' size='md' />
-            </div>
-            <p className="mt-8 text-[10px] tracking-[0.25em] uppercase text-[#8890c4] text-center font-medium">
-              Technology · Events · AI · Robotics
-            </p>
+          <div className="mt-auto flex justify-center">
+            <Link href="#" className="flex items-center gap-2 rounded-full bg-[#17131f] text-white px-6 py-3 text-[13px] font-medium">
+              Connect <span>→</span>
+            </Link>
           </div>
         </div>
       </div>
