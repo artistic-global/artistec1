@@ -2,7 +2,9 @@
 import Image from 'next/image'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
+import { ArrowUpRight, Circle, CircleDot } from 'lucide-react'
 import { ScrambleText, Typewriter } from '@/components/ui/scramble-text'
+import ConnectButton from '@/components/ui/connect-button'
 
 const heroCutoutPath =
   'M64 0H780C804 0 824 20 824 44V56C824 80 844 100 868 100H938C972 100 1000 128 1000 162V556C1000 590 972 618 938 618H474C450 618 430 598 430 574V542C430 508 402 480 368 480H64C30 480 2 452 2 418V62C2 28 30 0 64 0Z'
@@ -192,8 +194,8 @@ const Hero = () => {
               </div>
 
               <div className="absolute left-7 top-[30%] z-3 max-w-[160px] text-white xl:max-w-[180px]">
-                <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/8 backdrop-blur-md">
-                  <span className="text-[22px] leading-none">✺</span>
+                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-md">
+                  <span className="text-[50px] leading-none">✺</span>
                 </div>
                 <p className="text-[12px] font-medium leading-[1.7] text-white/80 blur-in" style={{ animationDelay: '0.7s', animationFillMode: 'both', opacity: 0 }}>
                   <Typewriter
@@ -235,9 +237,15 @@ const Hero = () => {
                     <p className="mt-1 text-[9px] uppercase tracking-[0.22em] text-white/58">Delivery</p>
                   </div>
                   <div className="flex flex-col gap-2 pb-1 text-white/74">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-[10px]">○</span>
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-[10px]">↗</span>
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-[10px]">◎</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-white/74">
+                      <Circle className="h-3 w-3" strokeWidth={1.75} />
+                    </span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-white/74">
+                      <ArrowUpRight className="h-3 w-3" strokeWidth={1.75} />
+                    </span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/35 text-white/74">
+                      <CircleDot className="h-3 w-3" strokeWidth={1.75} />
+                    </span>
                   </div>
                 </div>
               </div>
@@ -251,10 +259,8 @@ const Hero = () => {
                 </p>
               </div>
 
-              <div className="absolute bottom-[14px] left-[54%] z-4 flex items-center gap-3 rounded-full bg-white px-4 py-3 shadow-[0_14px_28px_rgba(34,22,55,0.08)]">
-                <span className="h-3 w-3 rounded-full bg-[#2a2338]" />
-                <span className="h-3 w-3 rounded-full bg-[#d9d1ea]" />
-                <span className="h-3 w-3 rounded-full bg-[#e8e2f4]" />
+              <div className="absolute bottom-[14px] left-[54%] z-4 -translate-x-1/2">
+                <ConnectButton />
               </div>
             </div>
           </div>
@@ -401,6 +407,9 @@ const Hero = () => {
               >
                 From websites and mobile apps to AI-powered content, CRM workflows, robotics, and drone solutions, we create technology that is practical, scalable, and built around your business goals.
               </p>
+              <div className="mt-5">
+                <ConnectButton className="w-fit" />
+              </div>
             </div>
 
             <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">

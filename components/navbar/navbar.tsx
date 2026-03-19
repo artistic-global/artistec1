@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ConnectButton from '@/components/ui/connect-button'
 
 const navLinks = ['About Us', 'Services', 'Case Studies']
 
@@ -72,14 +73,7 @@ const Navbar = () => {
         </div>
 
         <div className={`flex items-center gap-2 px-5 border-b border-l border-[#e0d9f0]/70 shrink-0 ${glassPanelClass}`}>
-        
-          <Link
-            href="#"
-            className={`flex items-center gap-2 rounded-full pl-4 pr-2 py-2 text-[12px] font-medium text-[#17131f] transition-colors hover:bg-white/60 ${glassButtonClass}`}
-          >
-            Connect
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#17131f] text-white text-[10px]">→</span>
-          </Link>
+          <ConnectButton />
         </div>
       </nav>
 
